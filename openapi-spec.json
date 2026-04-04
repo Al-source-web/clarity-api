@@ -1,0 +1,114 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Clarity Ingredient Safety API",
+    "version": "2.0.0",
+    "description": "The only ingredient safety API built on published research methodology with DOIs. 1,500+ validated ingredients across 15 safety dimensions. Evidence-graded for breastfeeding, pregnancy, toddler nutrition, histamine, DAO, CMPA, ADHD additives, heavy metals, blood pressure, and more. 174 contaminant products. 103 FDA recalls. 18 formula profiles. PubMed-cited. 9 languages.",
+    "contact": {
+      "name": "Health AI",
+      "url": "https://www.healthai.com/clarity/api",
+      "email": "lavinda@healthai.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://clarity-mu-green.vercel.app",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/check": {
+      "post": {
+        "operationId": "checkIngredient",
+        "summary": "Check an ingredient for safety across 15 dimensions",
+        "description": "Look up any ingredient by name. Supports 9 languages and alias matching (brand names, abbreviations, INCI names). Returns safety verdict, evidence tier, histamine/DAO signals, CMPA risk, ADHD flags, pregnancy safety, breastfeeding safety, and more.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["q"],
+                "properties": {
+                  "q": {
+                    "type": "string",
+                    "description": "Ingredient name, brand name, or alias to look up",
+                    "example": "fenugreek"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ingredient safety result with verdict, evidence tier, and dimensional safety data"
+          },
+          "404": {
+            "description": "Ingredient not found in database"
+          }
+        }
+      }
+    },
+    "/api/scan": {
+      "get": {
+        "operationId": "scanBarcode",
+        "summary": "Scan a product barcode for ingredient safety",
+        "description": "Submit a UPC/EAN barcode. Returns product name, brand, matched ingredients with individual safety verdicts, overall risk score, contaminant alerts, and flag summaries (ADHD, histamine, CMPA, heavy metals).",
+        "parameters": [
+          {
+            "name": "barcode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "8-14 digit UPC or EAN barcode",
+            "example": "0016000264601"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product safety scan result with per-ingredient verdicts and flag alerts"
+          },
+          "404": {
+            "description": "Product not found in Open Food Facts database"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
+    "/api/checkout": {
+      "post": {
+        "operationId": "createCheckout",
+        "summary": "Create a Stripe checkout session for API subscription",
+        "description": "Creates a Stripe Checkout session for subscribing to a paid API plan.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["plan"],
+                "properties": {
+                  "plan": {
+                    "type": "string",
+                    "enum": ["pro", "ultra", "mega"],
+                    "description": "Subscription plan"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Checkout session URL"
+          }
+        }
+      }
+    }
+  }
+}
