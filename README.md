@@ -1,139 +1,66 @@
 # Clarity Ingredient Safety API
 
-[![1,500+ ingredients](https://img.shields.io/badge/ingredients-1%2C500%2B-0D9E8F)](https://www.healthai.com/clarity/api)
-[![15 safety dimensions](https://img.shields.io/badge/dimensions-15-0D9E8F)](https://www.healthai.com/clarity/api)
-[![Published DOIs](https://img.shields.io/badge/methodology-published%20DOIs-C4A24E)](https://doi.org/10.5281/zenodo.19389747)
-[![Free tier](https://img.shields.io/badge/free%20tier-100%20lookups%2Fmo-091509)](https://www.healthai.com/clarity/api)
+[![4M+ products](https://img.shields.io/badge/products-4M%2B-0D9E8F)](https://www.healthai.com/clarity/api)
+[![25+ safety dimensions](https://img.shields.io/badge/safety%20dimensions-25%2B-0D9E8F)](https://www.healthai.com/clarity/api)
+[![Published DOIs](https://img.shields.io/badge/methodology-published%20DOIs-091509)](https://doi.org/10.5281/zenodo.19423468)
+[![9 languages](https://img.shields.io/badge/languages-9-C4A24E)](https://www.healthai.com/clarity/api)
 
-The only ingredient safety API built on **published research methodology with DOIs**. Evidence-graded for breastfeeding, pregnancy, toddler nutrition, histamine, DAO enzyme, CMPA, ADHD additives, heavy metals, blood pressure, and more.
+Clarity is a research-backed ingredient safety API built by [Health AI](https://www.healthai.com).
+
+Scan **4M+ products** across food, supplements, skincare, and medications. Every ingredient is evidence-graded across **25+ safety dimensions** for breastfeeding, pregnancy, histamine intolerance, MCAS, rosacea, HS, allergies, fertility, and more.
+
+Published methodology with DOIs. Database-first architecture. Same question, same answer, every time.
+
+## What It Does
+
+- Check a single ingredient for evidence-graded safety signals
+- Scan a product barcode and return ingredient-level safety context
+- Support multilingual ingredient lookup and fuzzy matching
+- Cover maternal health, inflammatory conditions, allergens, and consumer product safety in one API
 
 ## Quick Start
 
-```bash
-curl -X POST https://clarity-mu-green.vercel.app/api/check \
-  -H "Content-Type: application/json" \
-  -d '{"q": "fenugreek"}'
-```
-
-Response:
-```json
-{
-  "ok": true,
-  "query": "fenugreek",
-  "result": {
-    "name": "Fenugreek",
-    "verdict": "Caution",
-    "source_type": "Gold",
-    "lactation_safety": "Caution — may increase milk supply but significant histamine and DAO concerns",
-    "pregnancy_safety": "Avoid — uterine stimulant",
-    "histamine": {
-      "liberator": "Yes — triggers mast cell degranulation",
-      "severity": "High"
-    },
-    "dao": {
-      "inhibitor": "Yes",
-      "severity": "Moderate"
-    },
-    "flags": {
-      "cmpa_risk": false,
-      "adhd_risk": false,
-      "heavy_metal_risk": false
-    }
-  }
-}
-```
-
-## What It Covers
-
-Every ingredient is assessed across **15 safety dimensions**:
-
-| Dimension | What You Get |
-|---|---|
-| **Lactation Safety** | Verdict + breast milk transfer risk |
-| **Pregnancy Safety** | Trimester-specific cautions |
-| **Toddler Safety** | ADHD additive flags, pediatric dose limits |
-| **Histamine** | Liberator detection + severity rating |
-| **DAO Enzyme** | Inhibitor status + mechanism |
-| **CMPA** | Cow's milk cross-reactivity mapping |
-| **Blood Pressure** | Hypotensive/hypertensive classification |
-| **Heavy Metals** | Arsenic, lead, cadmium, mercury alerts |
-| **Allergens** | FDA Big 9 classification |
-| **Glycemic Index** | GI value + category |
-| **Cycle Phase** | Menstrual cycle sensitivity |
-| **Galactagogue** | Evidence vs folk tradition |
-| **Interactions** | 28 clinically curated pairs |
-| **Contaminants** | 174 brand-specific products |
-| **FDA Recalls** | 103 tracked recalls |
-
-## Database Stats
-
-- **1,500+** validated ingredients
-- **658** Gold-tier (primary source verified)
-- **900+** PubMed citations
-- **174** brand-specific contaminant products
-- **103** FDA recalls tracked
-- **18** infant formula profiles
-- **9** languages supported
-
-## Evidence Tiers
-
-| Tier | Meaning |
-|---|---|
-| **Gold** | Cross-referenced against LactMed, InfantRisk, or MilkSafe with PubMed citations |
-| **Silver** | PubMed confirmed but not cross-referenced to a primary lactation database |
-| **Bronze** | Limited evidence. Never displayed as "Research-Backed" |
-
-## Endpoints
-
-### POST `/api/check` — Ingredient Lookup
-
-Look up any ingredient by name, brand name, or alias. Supports 9 languages.
+### POST `/api/check`
 
 ```bash
 curl -X POST https://clarity-mu-green.vercel.app/api/check \
   -H "Content-Type: application/json" \
-  -d '{"q": "retinol"}'
+  -d '{"q":"fenugreek"}'
 ```
 
-Alias matching works — try `"q": "accutane"`, `"q": "vaseline"`, `"q": "differin"`.
-
-### GET `/api/scan` — Barcode Product Scan
-
-Scan a product by UPC/EAN barcode. Returns per-ingredient safety verdicts.
+### GET `/api/scan`
 
 ```bash
-curl "https://clarity-mu-green.vercel.app/api/scan?barcode=0016000264601"
+curl "https://clarity-mu-green.vercel.app/api/scan?barcode=0016000264601&mode=lactation"
 ```
 
-## Pricing
+## Use Cases
 
-| Plan | Price | Requests/Month |
-|---|---|---|
-| **Free** | $0 | 100 |
-| **Pro** | $49/mo | 2,000 |
-| **Ultra** | $199/mo | 10,000 |
-| **Mega** | $499/mo | 50,000 |
+- Pregnancy and breastfeeding apps
+- Nutrition and wellness platforms
+- Allergy and intolerance tools
+- Dermatology and inflammatory-condition products
+- Barcode scanning and product-safety workflows
+- Clinical and research support tools
 
-[Subscribe →](https://www.healthai.com/clarity/api)
+## Published Methodology
 
-## Published Research
+- [Clarity Methodology](https://doi.org/10.5281/zenodo.19423468)
+- [Beta-Glucan as a Galactagogue](https://doi.org/10.5281/zenodo.19389747)
+- [CMPA Formula Comparative Analysis](https://doi.org/10.5281/zenodo.19391415)
 
-This API is backed by published methodology — not a black box:
+## Docs
 
-- [Beta-Glucan as a Galactagogue](https://doi.org/10.5281/zenodo.19389747) — DOI: 10.5281/zenodo.19389747
-- [CMPA Formula Comparative Analysis](https://doi.org/10.5281/zenodo.19391415) — DOI: 10.5281/zenodo.19391415
-
-Data sourced from: NIH LactMed, InfantRisk, PubMed, DSLD, SIGHI, MilkSafe, DermNet.
-
-## OpenAPI Spec
-
-Full OpenAPI 3.0 specification: [`openapi-spec.json`](./openapi-spec.json)
+- [API page](https://www.healthai.com/clarity/api)
+- [Methodology](https://www.healthai.com/clarity/about)
+- [RapidAPI listing](https://rapidapi.com/ClarityHealthAI/api/clarity-ingredient-safety)
+- [OpenAPI spec](./openapi-spec.json)
 
 ## Built By
 
-**[Health AI](https://www.healthai.com)** — Olga Lavinda, PhD
-NIH NRSA Fellow · Farber Award, Society for Investigative Dermatology
-[ORCID](https://orcid.org/0000-0003-3577-5984) · [Google Scholar](https://scholar.google.com/citations?user=xJULhsYAAAAJ)
+**[Health AI](https://www.healthai.com)** - Olga Lavinda, PhD  
+NIH NRSA Fellow - Farber Award, Society for Investigative Dermatology  
+[ORCID](https://orcid.org/0000-0003-3577-5984) - [Google Scholar](https://scholar.google.com/citations?user=xJULhsYAAAAJ)
 
 ## License
 
