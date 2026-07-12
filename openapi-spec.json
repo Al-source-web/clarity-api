@@ -6,8 +6,7 @@
     "description": "The only ingredient safety API built on published research methodology with DOIs. 1,500+ validated ingredients across 15 safety dimensions. Evidence-graded for breastfeeding, pregnancy, toddler nutrition, histamine, DAO, CMPA, ADHD additives, heavy metals, blood pressure, and more. 174 contaminant products. 103 FDA recalls. 18 formula profiles. PubMed-cited. 9 languages.",
     "contact": {
       "name": "Health AI",
-      "url": "https://www.healthai.com/clarity/api",
-      "email": "lavinda@healthai.com"
+      "url": "https://healthai.com"
     }
   },
   "servers": [
@@ -28,7 +27,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["q"],
+                "required": [
+                  "q"
+                ],
                 "properties": {
                   "q": {
                     "type": "string",
@@ -91,11 +92,17 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["plan"],
+                "required": [
+                  "plan"
+                ],
                 "properties": {
                   "plan": {
                     "type": "string",
-                    "enum": ["pro", "ultra", "mega"],
+                    "enum": [
+                      "pro",
+                      "ultra",
+                      "mega"
+                    ],
                     "description": "Subscription plan"
                   }
                 }
